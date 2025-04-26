@@ -2,11 +2,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.models import Token
-from rest_framework.permissions import AllowAny
-from django.contrib.auth import login
 from .serializers import *
 from collections import defaultdict
-from django.db.models import Avg, Count,F
+from django.db.models import Avg
 from django.shortcuts import get_object_or_404
 
 class UserRegisterView(APIView):

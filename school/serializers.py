@@ -3,9 +3,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.validators import UniqueValidator
 from .models import Course, Teacher, CourseTeacherRelationship, User, Rate
-from django.contrib.auth.hashers import make_password,check_password
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
 from django.core.exceptions import ObjectDoesNotExist
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -83,36 +81,6 @@ class UserLoginSerializer(serializers.Serializer):
             
         attrs['user'] = user
         return attrs
-
-        
-    
-# class RateSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Rate
-#         fields = ['id', 'courseTeacher', 'courseTeacher_id', 'user', 'rate']
-
-#     def create(self, validated_data):
-#         #把具体的user和ct对象查找出来
-#         user_id = validated_data.pop('user_id')
-#         courseTeacher_id = validated_data.pop('courseTeacher_id')
-#         user = User.objects.get(id=user_id)
-#         courseTeacher = CourseTeacherRelationship.objects.get(id=courseTeacher_id)
-#         relationship = CourseTeacherRelationship.objects.create(user=user, courseTeacher=courseTeacher, **validated_data)
-#         print("I am creating a rate")
-#         return relationship
-    
-#     def update(self, instance, validated_data):
-#         if 'user_id' in validated_data:
-#             user_id = validated_data.pop('user_id')
-#             instance.user = User.objects.get(id=user_id)
-#         if 'courseTeacher_id' in validated_data:
-#             courseTeacher_id = validated_data.pop('courseTeacher_id')
-#             instance.courseTeacher = CourseTeacherRelationship.objects.get(id=courseTeacher_id)
-#         instance.rate = validated_data.get('rate', instance.rate)
-#         instance.save()
-#         return instance
-    
-
 
 class RateSerializer(serializers.ModelSerializer):
     teacher_id = serializers.CharField(write_only=True)
